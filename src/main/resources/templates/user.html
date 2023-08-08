@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userPage</title>
+
+</head>
+<body>
+<div>
+  <br><br><br><br><br>
+
+  <table th:border="1" align="center" cellpadding="5">
+    <tr>
+      <th>Name</th>
+      <th>LastName</th>
+      <th>eMail</th>
+      <th>password</th>
+      <th>role</th>
+    </tr>
+
+    <tr th:object="${user}">
+      <td th:utext="${user.getFirstName}">...</td>
+      <td th:utext="${user.getLastName()}">...</td>
+      <td th:utext="${user.getEmail()}">...</td>
+      <td th:utext="${user.getPassword()}">...</td>
+      <td th:utext="${user.getRoles()}">...</td>
+    </tr>
+    <input align="right" type = "button" value = "logout"
+           onclick = "window.location.href = '/logout'"/>
+  </table>
+</div>
+</body>
+</html>

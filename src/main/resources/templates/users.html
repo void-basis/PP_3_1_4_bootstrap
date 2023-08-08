@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>users</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+        crossorigin="anonymous"></script>
+<!----------------------------шапка------------------->
+<div>
+    <div class="p-3 mb-2 bg-dark bg-gradient text-white">
+        <div class="col">
+            <div class="container-fluid">
+                <h4>    <span style="display: inline;"
+                              th:text="${currentUser.getUsername()}">Current User</span>
+                    with roles:
+                    <span aria-current="page" style="display: inline;"
+                          th:text="${currentUser.getRoles.toString().replace('ROLE_',' ').replace('[',' ').replace(']',' ')}">Current Role</span>
+                    <button
+                            type="button" class="btn btn-link float-end" onclick="window.location.href = '/logout'">
+                        Logout
+                    </button>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <!----------------------------основная панель------------------->
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-2">
+                <div class="d-grid">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href = '/admin/users'">
+                        Admin
+                    </button>
+                    <button type="button" class="btn btn-light" onclick="window.location.href = '/user'">User</button>
+                </div>
+            </div>
+            <div class="col bg-light">
+                <div>
+                    <h4 class="fw-bold mb-2 text-left">
+                        Admin panel
+                    </h4>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href = '/admin/users'>Users table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href='/admin/addUser'>New User</a>
+                        </li>
+                    </ul>
+                    <br>
+                    <h4 class="fw-bold mb-2 text-left">
+                        All users
+                    </h4>
+                    <hr>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">FirstName</th>
+                            <th scope="col">LastName</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="lst : ${usersList}">
+                            <td th:utext="${lst.getFirstName()}">...</td>
+                            <td th:utext="${lst.getLastName()}">...</td>
+                            <td th:utext="${lst.getEmail()}">...</td>
+                            <td th:utext="${lst.getRoles()}">...</td>
+                            <td th:utext="${lst.getRoles()}">...</td>
+                            <td th:utext="${lst.getRoles()}">...</td>
+                            <td><button type="button" class="btn btn-info" onclick="window.location.href = '/admin/userUpdate/{id}(id=${lst.getId()})'">Edit</button></td>
+                            <td><button type="button" class="btn btn-danger">Delete</button></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <table th:border="1" align="center" cellpadding="5">
+                        <tr>
+                            <th>Name</th>
+                            <th>LastName</th>
+                            <th>eMail</th>
+                            <th>roles|autorities</th>
+                            <th>actions</th>
+
+                        </tr>
+                        <tr th:each="lst : ${usersList}">
+                            <td th:utext="${lst.getFirstName()}">...</td>
+                            <td th:utext="${lst.getLastName()}">...</td>
+                            <td th:utext="${lst.getEmail()}">...</td>
+                            <td th:utext="${lst.getRoles()}">...</td>
+                            <td>
+                                <form th:action="@{/admin/userUpdate/{id}(id=${lst.getId()})}">
+                                    <input type="submit" th:value="update   "/></form>
+                                <br>
+                                <form th:action="@{/admin/deleteUser/{id}(id=${lst.getId()})}">
+                                    <input type="submit" th:value="delete   "/></form>
+                                <br>
+                                <form th:action="@{/user/{id}(id=${lst.getId()})}">
+                                    <input type="submit" th:value="showUsersInformation"/></form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
