@@ -22,16 +22,11 @@ public class AdminController {
     }
 
     @GetMapping(value = "/admin/users")
-    public String usersPage(ModelMap model, Principal principal) {
+    public String usersPage(ModelMap model, Principal principal,@ModelAttribute("addUser") User user) {
         model.addAttribute("usersList", userService.listUsers());
         model.addAttribute("currentUser", userService.loadUserByUsername(principal.getName()));
-        return "users";
-    }
-
-    @GetMapping(value = "/admin/addUser")
-    public String addUser(ModelMap model) {
         model.addAttribute("addUser", new User());
-        return "addUser";
+        return "users";
     }
 
     @PostMapping("/admin/users")
@@ -40,19 +35,13 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @GetMapping(value = "/admin/userUpdate/{id}")
-    public String update(@PathVariable("id") long id, ModelMap model) {
-        model.addAttribute("userUpdate", userService.getUser(id));
-        return "userUpdate";
-    }
-
-    @PostMapping("/admin/userUpdate")
+    @PostMapping("/admin/users/{id}")
     public String update(@ModelAttribute("userUpdate") User user, @RequestParam String role) {
         userService.updateUser(user, role);
         return "redirect:/admin/users";
     }
 
-    @GetMapping(value = "/admin/deleteUser/{id}")
+    @PostMapping(value = "/admin/users/{id}/delete")
     public String deleteUser(@PathVariable("id") long id) {
         userService.deleteUserById(id);
         return "redirect:/admin/users";

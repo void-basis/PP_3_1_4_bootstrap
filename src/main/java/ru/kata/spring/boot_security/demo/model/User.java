@@ -27,6 +27,17 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Column(name = "age")
+    private int age;
+
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "users_id"),
@@ -37,13 +48,14 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String email, String password, Set<Role> roles) {
+    public User(Long id, String firstName, String lastName, String email, String password, Set<Role> roles, int age) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.age = age;
     }
 
     public Long getId() {
