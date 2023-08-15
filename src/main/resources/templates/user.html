@@ -42,7 +42,13 @@
         <div class="row ">
             <!----------------------------левый таб------------------->
             <div class="col-2">
+
                 <div class="d-grid">
+                    <button type="button" class="btn btn-light"
+                            th:if="${user.getRoles().toString().contains('ROLE_ADMIN')}"
+                            onclick="window.location.href = '/admin/users'">
+                        Admin
+                    </button>
                     <button type="button" class="btn btn-primary" onclick="window.location.href = '/user'">User</button>
                 </div>
             </div>
